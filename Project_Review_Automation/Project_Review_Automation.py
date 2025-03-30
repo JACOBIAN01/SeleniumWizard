@@ -21,7 +21,7 @@ wait = WebDriverWait(driver, 10)
 Phone = os.getenv("PHONE")
 phone_input = wait.until(EC.presence_of_element_located((By.NAME, "phone")))
 phone_input.send_keys(Phone)
-time.sleep(2)  # Small delay for UI update
+driver.implicitly_wait(5)  # Small delay for UI update
 
 #Click "Login with Password" Button
 login_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Login with password')]")))
@@ -37,19 +37,19 @@ password_input.send_keys(Password)
 password_input.send_keys(Keys.RETURN)
 
 #Open Dashboard Wait for Dashboard to Load
-time.sleep(2)
+driver.implicitly_wait(5) 
   
 # Step 5: Navigate to Dashboard Project
 driver.get("https://www.codingal.com/teacher/dashboard/projects/")
-time.sleep(0.5)
+driver.implicitly_wait(5) 
 
 #Find Total Number of Pending Project
 
 project_number = driver.find_element(By.XPATH, "//p[contains(@class, 'font-600') and contains(@class, 'text-lg') and contains(@class, 'text-yellow-200')]")
-time.sleep(0.2)
+driver.implicitly_wait(5) 
 Pending_project = int(project_number.text)
 print(f"Total Project Pending: {Pending_project}")
-time.sleep(0.2)
+driver.implicitly_wait(5) 
 
 def Review_Project():
 
@@ -69,7 +69,7 @@ def Review_Project():
     Lesson_Name = Lesson_Name_element.text
     print(f"Lesson Name: {Lesson_Name}") 
 
-    time.sleep(1)
+    driver.implicitly_wait(5) 
 
     #Review Npw Button 
     review_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Review now')]")))
@@ -88,26 +88,27 @@ def Review_Project():
     # Click the 5th star (index 4 in zero-based index)
     stars[4].click()
 
-    time.sleep(0.5)
+    driver.implicitly_wait(5) 
     review_project = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Review project')]")))
     #Submit Button Click
     review_project.click()
 
-    time.sleep(1)
+    driver.implicitly_wait(5) 
 
     Back_to_Project = wait.until(EC.element_to_be_clickable((By.XPATH, "(//a[contains(text(), 'Back to projects')])")))
     Back_to_Project.click()
 
-    time.sleep(5)
+    driver.implicitly_wait(5) 
 
     print("Project Review Done")
 
 while(Pending_project!=0):
     Review_Project()
     project_number = driver.find_element(By.XPATH, "//p[contains(@class, 'font-600') and contains(@class, 'text-lg') and contains(@class, 'text-yellow-200')]")
-    time.sleep(0.1)
+
     Pending_project = int(project_number.text)
-    time.sleep(0.1)
+
+    driver.implicitly_wait(5) 
     
     
 print("All Review Done")

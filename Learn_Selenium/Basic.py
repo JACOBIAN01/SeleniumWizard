@@ -38,6 +38,12 @@ from selenium.webdriver.common.by import By
 # student_button.click()
 
 
-
+# find_elements (By.NAME, “name”)	All elements with name attribute value matching the location will be returned.
+# find_elements (By.XPATH, “xpath”)	All elements with xpath syntax matching the location will be returned.
+# find_elements (By.LINK_TEXT, “link text”)	All elements with link text value matching the location will be returned.
+# find_elements (By.PARTIAL_LINK_TEXT, “partial link text”)	All elements with partial link text value matching the location will be returned.
+# find_elements (By.TAG_NAME, “tag name”)	All elements with given tag name will be returned.
+# find_elements (By.CLASS_NAME, “class name”)	All elements with matching class attribute name will be returned.
+# find_elements (By.CSS_SELECTOR, “css selector”)	All elements with matching CSS selector will be returned.
 
 
