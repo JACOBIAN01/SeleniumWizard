@@ -9,9 +9,12 @@ driver.get("https://in.bookmyshow.com/explore/home/vijayawada")
 Movies = driver.find_elements(By.XPATH,"//div[contains(@class, 'sc-7o7nez-0') and contains(@class, 'daKrZU')]")
 driver.implicitly_wait(10)
 
-print(Movies)
-# for movie in Movies:
-#     print(movie.text)
-driver.implicitly_wait(10)
+MovieList = [movie.text for movie in Movies]
+
+print("Available Movies")
+
+
+
+
 
 driver.quit()
