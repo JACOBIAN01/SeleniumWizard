@@ -49,6 +49,9 @@ except:
     print("No Language Section Available. Proceed to Booking page")
 
 
+print("Available Dates")
+
+date_element = driver.find_elements(By.XPATH,"")
 
 
 
