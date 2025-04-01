@@ -28,6 +28,7 @@ MovieLinkElement.click()
 
 Book_Ticket_Button = driver.find_element(By.XPATH,"//button[contains(@class,'sc-8f9mtj-0') and contains(@class,'sc-8f9mtj-1') and contains(@class,'sc-1vmod7e-0 bGKFux')]")
 Book_Ticket_Button.click()
+driver.implicitly_wait(5)
 
 try:
     
@@ -36,11 +37,20 @@ try:
     for i,lang in enumerate(language):
         print(f"{i}-{lang.text}")
     lang_choice = int(input("Select Language: "))
-    lang_button = driver.find_element(By.XPATH,"//li[contains(@class,'')]")
-    
+    selected_lang = language[lang_choice].text
 
+    lang_button = driver.find(By.XPATH,f"//li[.//span[text()='{selected_lang}']]//div[contains(@class,'sc-vhz3gb-3')and contains(@class,'ksLpgw')]//span[text()='2D']")
+
+    lang_button.click()
+    driver.implicitly_wait(5)
+    
+    
 except:
     print("No Language Section Available. Proceed to Booking page")
+
+
+
+
 
 
 driver.quit()
