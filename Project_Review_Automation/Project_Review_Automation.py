@@ -19,20 +19,26 @@ driver = webdriver.Chrome()
 wait = WebDriverWait(driver, 10)
 
 def Login():
-    #Open Codingal Login Page
-    driver.get("https://www.codingal.com/login/")
-    
-    phone_input = wait.until(EC.presence_of_element_located((By.NAME, "phone")))
-    phone_input.send_keys(Phone)
-    #Click "Login with Password" Button
-    login_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Login with password')]")))
-    login_btn.click()
-
-    #Enter Password
-    password_input = wait.until(EC.element_to_be_clickable((By.NAME, "password")))
-    password_input.click()  # Click to activate it
-    password_input.send_keys(Password)
-    password_input.send_keys(Keys.RETURN)
+    try:
+        #Open Codingal Login Page
+        driver.get("https://www.codingal.com/login/")
+        driver.implicitly_wait(5)
+        phone_input = wait.until(EC.presence_of_element_located((By.NAME, "phone")))
+        phone_input.send_keys(Phone)
+        driver.implicitly_wait(5)
+        #Click "Login with Password" Button
+        login_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Login with password')]")))
+        login_btn.click()
+        driver.implicitly_wait(5)
+        #Enter Password
+        password_input = wait.until(EC.element_to_be_clickable((By.NAME, "password")))
+        driver.implicitly_wait(5)
+        password_input.click()  # Click to activate it
+        password_input.send_keys(Password)
+        driver.implicitly_wait(5)
+        password_input.send_keys(Keys.RETURN)
+    except Exception as e:
+        print(f"Error During Login: {e}")
 
 def Pending_Project_Count():
     # Step 5: Navigate to Dashboard Project
@@ -45,7 +51,6 @@ def Pending_Project_Count():
         print(f"Could not find project count, assuming 0. Error{e}")
         return 0
     
-
 
 def Review_Project():
     try:
