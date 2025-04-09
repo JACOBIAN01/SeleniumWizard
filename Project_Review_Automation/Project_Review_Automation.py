@@ -17,6 +17,7 @@ driver = webdriver.Chrome()
 driver.get("https://www.codingal.com/login/")
 wait = WebDriverWait(driver, 10)
 
+
 #Enter Phone Number
 Phone = os.getenv("PHONE")
 phone_input = wait.until(EC.presence_of_element_located((By.NAME, "phone")))
@@ -78,8 +79,11 @@ def Review_Project():
     #Write Review
     textarea = wait.until(EC.presence_of_element_located((By.TAG_NAME, "textarea")))
 
+    #Review Text
+    Review_text = f"Congratulations {Student_Name} on completing {Lesson_Name}! Your dedication and effort are commendable. Your work showcases creativity and skill. Keep up the excellent work! Your achievements demonstrate your potential and promise for future success. Well done {Student_Name}!"
+
     # Type text into the textarea
-    textarea.send_keys(f"Congratulations {Student_Name} on completing {Lesson_Name}! Your dedication and effort are commendable. Your work showcases creativity and skill. Keep up the excellent work! Your achievements demonstrate your potential and promise for future success. Well done {Student_Name}!")
+    textarea.send_keys(Review_text)
 
     #Give Star
 
