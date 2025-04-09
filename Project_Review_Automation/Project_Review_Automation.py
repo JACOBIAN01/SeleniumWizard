@@ -24,8 +24,6 @@ def Login():
     
     phone_input = wait.until(EC.presence_of_element_located((By.NAME, "phone")))
     phone_input.send_keys(Phone)
-    # Small delay for UI update
-    driver.implicitly_wait(2)
     #Click "Login with Password" Button
     login_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Login with password')]")))
     login_btn.click()
@@ -35,8 +33,7 @@ def Login():
     password_input.click()  # Click to activate it
     password_input.send_keys(Password)
     password_input.send_keys(Keys.RETURN)
-    #Open Dashboard Wait for Dashboard to Load
-    driver.implicitly_wait(2) 
+
 
 
 def Pending_Project_Count():
@@ -46,8 +43,8 @@ def Pending_Project_Count():
         project_number = driver.find_element(By.XPATH, "//p[contains(@class, 'font-600') and contains(@class, 'text-lg') and contains(@class, 'text-yellow-200')]")
         Pending_project = int(project_number.text)
         return Pending_project
-    except:
-        print("Could not find project count, assuming 0.")
+    except Exception as e:
+        print(f"Could not find project count, assuming 0. Error{e}")
         return 0
     
 
@@ -106,6 +103,12 @@ Login()
 
 Pending_projects = Pending_Project_Count()
 print(f"Pending Project:{Pending_projects}")
+
+if Pending_projects == 0:
+    print("No pending projects to review.")
+    print("✅ All project reviews completed.")
+    driver.quit()
+    exit()
 
 while(Pending_projects>0):
     Review_Project()
