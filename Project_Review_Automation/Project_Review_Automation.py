@@ -7,13 +7,10 @@ import time
 from dotenv import load_dotenv
 import os
 import random
-
 #Load Environment Variable
 load_dotenv()
 Phone = os.getenv("PHONE")
 Password = os.getenv("PASSWORD")
-
-
 #Set up WebDriver
 driver = webdriver.Chrome()
 wait = WebDriverWait(driver, 10)
@@ -22,27 +19,30 @@ def Login():
     try:
         #Open Codingal Login Page
         driver.get("https://www.codingal.com/login/")
-        driver.implicitly_wait(5)
+        time.sleep(0.5)
         phone_input = wait.until(EC.presence_of_element_located((By.NAME, "phone")))
         phone_input.send_keys(Phone)
-        driver.implicitly_wait(5)
+        time.sleep(0.5)
         #Click "Login with Password" Button
         login_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Login with password')]")))
         login_btn.click()
-        driver.implicitly_wait(5)
+        time.sleep(0.5)
         #Enter Password
         password_input = wait.until(EC.element_to_be_clickable((By.NAME, "password")))
-        driver.implicitly_wait(5)
-        password_input.click()  # Click to activate it
+        time.sleep(0.5)
         password_input.send_keys(Password)
-        driver.implicitly_wait(5)
-        password_input.send_keys(Keys.RETURN)
+        login_btn_2 = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Login with password')]")))
+        login_btn_2.click()  # Click to activate it
+        time.sleep(0.5)
     except Exception as e:
         print(f"Error During Login: {e}")
+
+
 
 def Pending_Project_Count():
     # Step 5: Navigate to Dashboard Project
     driver.get("https://www.codingal.com/teacher/dashboard/projects/")
+    time.sleep(2)
     try:
         project_number = driver.find_element(By.XPATH, "//p[contains(@class, 'font-600') and contains(@class, 'text-lg') and contains(@class, 'text-yellow-200')]")
         Pending_project = int(project_number.text)
@@ -136,15 +136,12 @@ def Generate_Review(name,lesson):
             "This is only the beginning. Bigger things await!",
             "Fantastic work overall. Stay passionate and persistent!"
         ]
-
-        emojis = ["🌟", "👏", "🔥", "💪", "🚀", "✅"]
-
         
         review_text = (
             f"{random.choice(openings)} "
             f"{random.choice(compliments)} {random.choice(compliments)} "
             f"{random.choice(encouragements)} {random.choice(encouragements)} "
-            f"{random.choice(closings)} {random.choice(emojis)}"
+            f"{random.choice(closings)}"
         )
 
         return review_text
@@ -162,7 +159,7 @@ print(f"Pending Project:{Pending_projects}")
 
 if Pending_projects == 0:
     print("No pending projects to review.")
-    print("✅ All project reviews completed.")
+    print("All project reviews completed.")
     driver.quit()
     exit()
 
@@ -173,5 +170,5 @@ while(Pending_projects>0):
     
     
 # Close the browser
-print("✅ All project reviews completed.")
+print(" All project reviews completed.")
 driver.quit()
