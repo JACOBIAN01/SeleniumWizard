@@ -95,7 +95,7 @@ def Review_Project():
     driver.implicitly_wait(5) 
     review_project = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Review project')]")))
     #Submit Button Click
-    review_project.click()
+    # review_project.click()   #Here SUbmit Button
 
     driver.implicitly_wait(5) 
 
