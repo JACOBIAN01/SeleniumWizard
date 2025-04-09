@@ -34,8 +34,6 @@ def Login():
     password_input.send_keys(Password)
     password_input.send_keys(Keys.RETURN)
 
-
-
 def Pending_Project_Count():
     # Step 5: Navigate to Dashboard Project
     driver.get("https://www.codingal.com/teacher/dashboard/projects/")
@@ -72,10 +70,10 @@ def Review_Project():
         textarea = wait.until(EC.presence_of_element_located((By.TAG_NAME, "textarea")))
 
         #Review Text
-        Review_text = f"Congratulations {Student_Name} on completing {Lesson_Name}! Your dedication and effort are commendable. Your work showcases creativity and skill. Keep up the excellent work! Your achievements demonstrate your potential and promise for future success. Well done {Student_Name}!"
-
+    
+        Review = Generate_Review(Student_Name,Lesson_Name)
         # Type text into the textarea
-        textarea.send_keys(Review_text)
+        textarea.send_keys(Review)
 
         #Give Star
         stars = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "rating-star")))
@@ -96,7 +94,60 @@ def Review_Project():
     except Exception as e:
         print(f"Error during review: {e}")
 
+def Generate_Review(name,lesson):
+    try:
+        openings = [
+            f"Congratulations {name} on completing {lesson}!",
+            f"Awesome job on finishing {lesson}, {name}!",
+            f"Well done {name} for submitting your {lesson} project!",
+            f"{name}, great effort on your {lesson} work!",
+            f"You did it, {name}! {lesson} is complete!"
+        ]
 
+        compliments = [
+            f"{name}, your creativity really shines through in the {lesson} project.",
+            f"I can see the effort and thought you've put into {lesson}, {name}.",
+            f"{name}, you're developing some solid skills through your work on {lesson}.",
+            f"You're getting better with every project, and {lesson} is a great example of that, {name}.",
+            f"Your {lesson} submission reflects clear understanding and imagination, {name}.",
+            f"{name}, this {lesson} project shows great progress from your previous submissions.",
+            f"Impressive attention to detail in your {lesson} project, {name}.",
+            f"{name}, your approach to solving challenges in {lesson} is evolving beautifully."
+        ]
+
+        encouragements = [
+            f"Keep up the amazing work! {name}",
+            f"You're on the right path {name} — stay consistent!",
+            f"Proud of your progress{name}. Keep going!",
+            "Excited to see what you'll do next!",
+            f"Keep pushing your limits {name} — you're doing great!",
+            "Keep challenging yourself — the sky’s the limit!"
+        ]
+
+        closings = [
+            "Your dedication is truly inspiring. Keep shining!",
+            "You're setting a great example for others!",
+            "Keep building your skills — you're on an exciting journey!",
+            "This is only the beginning. Bigger things await!",
+            "Fantastic work overall. Stay passionate and persistent!"
+        ]
+
+        emojis = ["🌟", "👏", "🔥", "💪", "🚀", "✅"]
+
+        
+        review_text = (
+            f"{random.choice(openings)} "
+            f"{random.choice(compliments)} {random.choice(compliments)} "
+            f"{random.choice(encouragements)} {random.choice(encouragements)} "
+            f"{random.choice(closings)} {random.choice(emojis)}"
+        )
+
+        return review_text
+
+    except Exception as e:
+        print(f"Error in Review Generation:{e}")
+        Review_text = f"Congratulations {name} on completing {lesson}! Your dedication and effort are commendable. Your work showcases creativity and skill. Keep up the excellent work! Your achievements demonstrate your potential and promise for future success. Well done {name}!"
+        return Review_text
 
 #Main Execution
 Login()
@@ -112,7 +163,7 @@ if Pending_projects == 0:
 
 while(Pending_projects>0):
     Review_Project()
-    driver.implicitly_wait(5) 
+    time.sleep(1)
     Pending_projects = Pending_Project_Count()
     
     
