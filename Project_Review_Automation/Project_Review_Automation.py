@@ -13,10 +13,13 @@ Phone = os.getenv("PHONE")
 Password = os.getenv("PASSWORD")
 #Set up WebDriver
 driver = webdriver.Chrome()
+# options = webdriver.ChromeOptions()
+# options.add_argument("--headless") 
 wait = WebDriverWait(driver, 10)
 
 def Login():
     try:
+        print("Opening Codingal Login Page")
         #Open Codingal Login Page
         driver.get("https://www.codingal.com/login/")
         time.sleep(0.5)
@@ -55,15 +58,23 @@ def Pending_Project_Count():
 def Review_Project():
     try:
         #Review Now Button
-        anchor = wait.until(EC.element_to_be_clickable((By.XPATH, "(//a[contains(text(), 'Review now')])[1]")))
-        anchor.click()
+        # anchor = wait.until(EC.element_to_be_clickable((By.XPATH, "(//a[contains(text(), 'Review now')])[1]")))
+        # anchor.click()
+
+        element = wait.until(EC.element_to_be_clickable((By.XPATH, "(//a[contains(text(), 'Review now')])[1]")))
+        driver.execute_script("arguments[0].scrollIntoView(true);", element)
+        time.sleep(1)  # Allow time for scrolling
+        driver.execute_script("arguments[0].click();", element)
 
         #Project Page
         #Find Student Name
         Student_Name_element = driver.find_element(By.XPATH, "//p[contains(text(), 'Submitted by')]/preceding-sibling::p")
         Student_Name = Student_Name_element.text  # Output: Student Name
         #Find Lesson Name
-        Lesson_Name_element = driver.find_element(By.XPATH, "//p[contains(text(), 'Lesson')]")
+        # Lesson_Name_element = driver.find_element(By.XPATH, "//p[contains(text(), 'Lesson')]")
+        Lesson_Name_element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//p[contains(text(), 'Lesson')]"))
+        )
         Lesson_Name = Lesson_Name_element.text
         print(f"Reviewing project for {Student_Name} - {Lesson_Name}") 
 
@@ -126,7 +137,7 @@ def Generate_Review(name,lesson):
             f"Proud of your progress{name}. Keep going!",
             "Excited to see what you'll do next!",
             f"Keep pushing your limits {name} — you're doing great!",
-            "Keep challenging yourself — the sky’s the limit!"
+            "Keep challenging yourself — the sky's the limit!"
         ]
 
         closings = [
@@ -152,6 +163,7 @@ def Generate_Review(name,lesson):
         return Review_text
 
 #Main Execution
+print("Let's begin!")
 Login()
 
 Pending_projects = Pending_Project_Count()
