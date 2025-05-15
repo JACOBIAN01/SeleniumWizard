@@ -51,6 +51,51 @@ def Pending_Project_Count():
         print(f"Could not find project count, assuming 0. Error{e}")
         return 0
 
+
+def Generate_Review(name,lesson):
+    try:
+        openings = [
+            f"Congratulations {name} on completing {lesson}!",
+            f"Awesome job on finishing {lesson}, {name}!",
+            f"Well done {name} for submitting your {lesson} project!",
+            f"{name}, great effort on your {lesson} work!",
+            f"You did it, {name}! {lesson} is complete!"
+        ]
+
+        compliments = [
+            f"{name}, your creativity really shines through in the {lesson} project.",
+            f"I can see the effort and thought you've put into {lesson}, {name}.",
+            f"{name}, you're developing some solid skills through your work on {lesson}.",
+            f"You're getting better with every project, and {lesson} is a great example of that, {name}.",
+            f"Your {lesson} submission reflects clear understanding and imagination, {name}.",
+            f"{name}, this {lesson} project shows great progress from your previous submissions.",
+            f"Impressive attention to detail in your {lesson} project, {name}.",
+            f"{name}, your approach to solving challenges in {lesson} is evolving beautifully."
+        ]
+
+        encouragements = [
+            f"Keep up the amazing work! {name}",
+            f"You're on the right path {name} — stay consistent!",
+            f"Proud of your progress{name}. Keep going!",
+            "Excited to see what you'll do next!",
+            f"Keep pushing your limits {name} — you're doing great!",
+            "Keep challenging yourself — the sky's the limit!"
+        ]
+
+        review_text = (
+            f"{random.choice(openings)} "
+            f"{random.choice(compliments)} {random.choice(compliments)} "
+            f"{random.choice(encouragements)} {random.choice(encouragements)} "
+        )
+
+        return review_text
+
+    except Exception as e:
+        print(f"Error in Review Generation:{e}")
+        Review_text = f"Congratulations {name} on completing {lesson}! Your dedication and effort are commendable. Your work showcases creativity and skill. Keep up the excellent work! Your achievements demonstrate your potential and promise for future success. Well done {name}!"
+        return Review_text
+
+
 def Review_Project():
     try:
         element = wait.until(EC.element_to_be_clickable((By.XPATH, "(//a[contains(text(), 'Review now')])[1]")))
@@ -74,16 +119,14 @@ def Review_Project():
         #Write Review
         textarea = wait.until(EC.presence_of_element_located((By.TAG_NAME, "textarea")))
         #Review Text
-        Review = f"Congratulations {Student_Name} on completing {Lesson_Name}! Your dedication and effort are commendable. Your work showcases creativity and skill. Keep up the excellent work! Your achievements demonstrate your potential and promise for future success. Well done {Student_Name}!"
+        Review = Generate_Review(Student_Name,Lesson_Name)
         # Type text into the textarea
         textarea.send_keys(Review)
-
         #Enhance With AI
         try:
-            time.sleep(0.5)
             enhance_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//button[.//span[text()='Enhance with AI']]")))
             enhance_button.click()
-            time.sleep(0.5)
+            time.sleep(2)
         except Exception as e:
             pass
         #Give Star
