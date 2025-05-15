@@ -80,7 +80,10 @@ def Review_Project():
 
         #Enhance With AI
         try:
-            enhance_button = wait.
+            time.sleep(0.5)
+            enhance_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//button[.//span[text()='Enhance with AI']]")))
+            enhance_button.click()
+            time.sleep(0.5)
         except Exception as e:
             pass
         #Give Star
