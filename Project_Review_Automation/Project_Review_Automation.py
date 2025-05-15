@@ -36,7 +36,7 @@ def Login():
         password_input.send_keys(Password)
         login_btn_2 = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Login with password')]")))
         login_btn_2.click()  # Click to activate it
-        time.sleep(0.5)
+        time.sleep(2)
     except Exception as e:
         print(f"Error During Login: {e}")
 
@@ -140,19 +140,10 @@ def Generate_Review(name,lesson):
             "Keep challenging yourself — the sky's the limit!"
         ]
 
-        closings = [
-            "Your dedication is truly inspiring. Keep shining!",
-            "You're setting a great example for others!",
-            "Keep building your skills — you're on an exciting journey!",
-            "This is only the beginning. Bigger things await!",
-            "Fantastic work overall. Stay passionate and persistent!"
-        ]
-        
         review_text = (
             f"{random.choice(openings)} "
             f"{random.choice(compliments)} {random.choice(compliments)} "
             f"{random.choice(encouragements)} {random.choice(encouragements)} "
-            f"{random.choice(closings)}"
         )
 
         return review_text
