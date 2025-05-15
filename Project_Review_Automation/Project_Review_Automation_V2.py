@@ -68,7 +68,7 @@ def Review_Project():
         )
         Lesson_Name = Lesson_Name_element.text
         print(f"Reviewing project for {Student_Name} - {Lesson_Name}") 
-        #Review Now Button 
+        #Review Now Button
         review_btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Review now')]")))
         review_btn.click()
         #Write Review
@@ -77,6 +77,12 @@ def Review_Project():
         Review = f"Congratulations {Student_Name} on completing {Lesson_Name}! Your dedication and effort are commendable. Your work showcases creativity and skill. Keep up the excellent work! Your achievements demonstrate your potential and promise for future success. Well done {Student_Name}!"
         # Type text into the textarea
         textarea.send_keys(Review)
+
+        #Enhance With AI
+        try:
+            enhance_button = wait.
+        except Exception as e:
+            pass
         #Give Star
         stars = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, "rating-star")))
         given_stars = random.choice([3,4])
